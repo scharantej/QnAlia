@@ -1,0 +1,40 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shopping Cart</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>Shopping Cart</h1>
+<div class="cart">
+{% for cart_item in cart_items %}
+<div class="cart-item">
+<img src="{{ cart_item.image }}" alt="{{ cart_item.name }}">
+<div class="cart-item-info">
+<h3>{{ cart_item.name }}</h3>
+<p>{{ cart_item.price }}</p>
+<form action="/update_cart_quantity" method="POST">
+<input type="hidden" name="product_id" value="{{ cart_item.product_id }}">
+<input type="number" name="quantity" value="{{ cart_item.quantity }}" min="1">
+<input type="submit" value="Update Quantity">
+</form>
+<form action="/remove_from_cart" method="POST">
+<input type="hidden" name="product_id" value="{{ cart_item.product_id }}">
+<input type="submit" value="Remove">
+</form>
+</div>
+</div>
+{% endfor %}
+</div>
+<div class="cart-total">
+<h2>Total Price: {{ total_price }}</h2>
+<a href="/checkout">Proceed to Checkout</a>
+</div>
+</body>
+</html>
+
+
